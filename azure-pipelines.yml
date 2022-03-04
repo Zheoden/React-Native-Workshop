@@ -1,0 +1,93 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master
+
+jobs:
+- job: Linter
+  pool:
+    vmImage: 'macOS-10.15'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '12.16.1'
+    displayName: 'Install Node'
+
+  - script: yarn install
+    workingDirectory: '$(Build.SourcesDirectory)/code'
+    displayName: 'Install npm packages'
+
+  - script: yarn lint
+    workingDirectory: '$(Build.SourcesDirectory)/code'
+    displayName: 'Check files'
+
+- job: Build_Android
+  pool:
+    vmImage: 'macOS-10.15'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '12.16.1'
+    displayName: 'Install Node'
+
+  - script: yarn install
+    workingDirectory: '$(Build.SourcesDirectory)/code'
+    displayName: 'Install npm packages'
+
+  # - script: yarn android
+  #   workingDirectory: '$(Build.SourcesDirectory)/code'
+  #   displayName: 'Build'
+
+- job: Build_iOS
+  pool:
+    vmImage: 'macOS-10.15'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '12.16.1'
+    displayName: 'Install Node'
+
+  - script: yarn install
+    workingDirectory: '$(Build.SourcesDirectory)/code'
+    displayName: 'Install npm packages'
+
+  - script: pod install
+    workingDirectory: '$(Build.SourcesDirectory)/code/ios'
+    displayName: 'Install pod dependencies'
+
+  - script: yarn ios
+    workingDirectory: '$(Build.SourcesDirectory)/code'
+    displayName: 'Build'
+
+- job: Unit_Tests
+  pool:
+    vmImage: 'macOS-10.15'
+  steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '12.16.1'
+    displayName: 'Install Node'
+
+  - script: yarn install
+    workingDirectory: '$(Build.SourcesDirectory)/code'
+    displayName: 'Install npm packages'
+
+  - script: yarn test:ci
+    workingDirectory: '$(Build.SourcesDirectory)/code'
+    displayName: 'Run unit tests'
+
+  - task: PublishTestResults@2
+    displayName: 'Publish unit tests results'
+    inputs:
+      testResultsFormat: 'JUnit'
+      testResultsFiles: 'unit-tests.xml'
+      workingDirectory: '$(Build.SourcesDirectory)/code/test-results'
+
+  - task: PublishCodeCoverageResults@1
+    displayName: 'Publish test coverage report'
+    inputs:
+      codeCoverageTool: 'Cobertura'
+      summaryFileLocation: '$(Build.SourcesDirectory)/code/test-results/cobertura-coverage.xml'

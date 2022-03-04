@@ -1,0 +1,1 @@
+export const HOME_CHANGE_LNG = 'HOME_CHANGE_LNG';

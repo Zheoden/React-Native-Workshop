@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "ESNEXT",
+        "allowSyntheticDefaultImports": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "moduleResolution": "node",
+        "module": "ESNext",
+        "lib": [
+            "ES6",
+            "DOM",
+            "ES2017",
+            "es2018.promise"
+        ],
+        "baseUrl": ".",
+        "outDir": "output/tests",
+        "types": [
+            "node",
+            "@wdio/sync",
+            "chai"
+        ]
+    },
+    "include": [
+        "./tests/**/*",
+    ],
+}

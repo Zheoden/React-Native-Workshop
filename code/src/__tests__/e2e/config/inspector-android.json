@@ -1,0 +1,13 @@
+{
+    "platformName": "Android",
+    "maxInstances": 1,
+    "deviceName": "Redmi Note 7 - 9",
+    "orientation": "PORTRAIT",
+    "automationName": "UiAutomator2",
+    "appPackage": "com.rnworkshop",
+    "appActivity": "com.rnworkshop.MainActivity",
+    "noReset": true,
+    "fullReset": false,
+    "dontStopAppOnReset": true,
+    "newCommandTimeout": 60
+}

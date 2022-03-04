@@ -1,0 +1,23 @@
+# top-most EditorConfig file
+root = true
+
+# Newline style (Win in this case) with a newline ending every file. Also delete trailing whitespace
+[*]
+end_of_line = crlf
+insert_final_newline = true
+trim_trailing_whitespace = true
+max_line_length = 80
+
+# Set default charset
+[*]
+charset = utf-8
+
+# 2 space indentation
+[*]
+indent_style = space
+indent_size = 2
+
+# Markdown styles
+[*.md]
+max_line_length = 0
+trim_trailing_whitespace = false
